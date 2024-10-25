@@ -15,7 +15,7 @@ fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modi
         startDestination = BottomNavItem.Courses.route,
         modifier = modifier
     ) {
-        composable(BottomNavItem.Courses.route) { CoursesScreen(modifier) }
+        composable(BottomNavItem.Courses.route) { CoursesScreen(modifier, context) }
         composable(BottomNavItem.Test.route) { TestScreen(context, modifier) }
         composable(BottomNavItem.Dictionary.route) { DictionaryScreen(modifier) }
         composable(BottomNavItem.My_Words.route) { MyWordsScreen(modifier) }
