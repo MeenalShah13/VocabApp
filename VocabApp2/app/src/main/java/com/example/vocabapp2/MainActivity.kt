@@ -1,20 +1,28 @@
 package com.example.vocabapp2
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomAppBarDefaults.windowInsets
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -28,8 +36,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             VocabApp2Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    VocabApp(modifier =  Modifier.padding(innerPadding))
+                Surface(modifier = Modifier.fillMaxSize()) {
+                    VocabApp(modifier = Modifier)
                 }
             }
         }
@@ -39,27 +47,32 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun VocabApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
+    val context: Context = LocalContext.current
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController) }
+        bottomBar = { BottomNavigationBar(navController = navController, modifier = modifier) }
     ) { innerPadding ->
-        NavHostContainer(navController, Modifier.padding(innerPadding))
+        NavHostContainer(navController, Modifier.padding(innerPadding), context)
     }
 }
 
 
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+fun BottomNavigationBar(navController: NavHostController, modifier: Modifier = Modifier) {
     val items = listOf(
-        BottomNavItem.Home,
-        BottomNavItem.Categories,
-        BottomNavItem.Favorites,
-        BottomNavItem.Profile
+        BottomNavItem.Courses,
+        BottomNavItem.Dictionary,
+        BottomNavItem.Test,
+        BottomNavItem.My_Words
     )
-    BottomAppBar {
+    BottomAppBar (modifier = modifier) {
         val currentRoute = currentRoute(navController)
-        items.forEach { item ->
-            Row {
+        Row(modifier = Modifier
+            .fillMaxWidth()
+            .windowInsetsPadding(windowInsets),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            verticalAlignment = Alignment.CenterVertically) {
+            items.forEach { item ->
                 Button(onClick = {
                     navController.navigate(item.route) {
                         popUpTo(navController.graph.startDestinationId) {

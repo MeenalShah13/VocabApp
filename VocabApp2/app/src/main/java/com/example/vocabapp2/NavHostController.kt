@@ -15,8 +15,8 @@ fun NavHostContainer(navController: NavHostController, modifier: Modifier = Modi
         modifier = modifier
     ) {
         composable(BottomNavItem.Home.route) { HomeScreen() }
-        composable(BottomNavItem.Categories.route) { Dictionary_screeen() }
-        composable(BottomNavItem.Favorites.route) { Favorites_screen() }
+        composable(BottomNavItem.Categories.route) { CategoriesScreen() }
+        composable(BottomNavItem.Favorites.route) { FavoritesScreen() }
         composable(BottomNavItem.Profile.route) { ProfileScreen() }
     }
 }
