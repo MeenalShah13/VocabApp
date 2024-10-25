@@ -5,25 +5,47 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults.windowInsets
 import androidx.compose.material3.Button
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.vocabapp2.model.BottomNavItem
@@ -49,10 +71,46 @@ fun VocabApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val context: Context = LocalContext.current
     Scaffold(
-        bottomBar = { BottomNavigationBar(navController = navController, modifier = modifier) }
+        topBar = { TopTitleBar(modifier) },
+        bottomBar = { BottomNavigationBar(navController = navController, modifier = modifier) },
+        modifier = modifier.fillMaxSize()
     ) { innerPadding ->
-        NavHostContainer(navController, Modifier.padding(innerPadding), context)
+        Surface(modifier = modifier.fillMaxSize()
+            .padding(innerPadding)
+            .statusBarsPadding()
+            .safeDrawingPadding()) {
+            NavHostContainer(navController, modifier, context)
+        }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TopTitleBar(modifier: Modifier = Modifier) {
+    CenterAlignedTopAppBar(
+        title = {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Spacer(modifier.width(130.dp))
+                Text(
+                    text = "VocabApp",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Row(
+                    modifier.padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Spacer(modifier.weight(1f))
+                    Icon(Icons.Filled.Person, contentDescription = "Profile Picture")
+                    Text(
+                        text = "User",
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                }
+            }
+        },
+        modifier = modifier
+    )
 }
 
 
@@ -82,7 +140,11 @@ fun BottomNavigationBar(navController: NavHostController, modifier: Modifier = M
                         restoreState = true
                     }
                 }) {
-                    Icon(item.icon, contentDescription = item.label)
+                    Column(verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(item.icon, contentDescription = item.label)
+                        Text(text = item.label, textAlign = TextAlign.Center, fontSize = 11.sp)
+                    }
                 }
             }
         }
@@ -99,5 +161,8 @@ fun currentRoute(navController: NavHostController): String? {
 @Composable
 fun GreetingPreview() {
     VocabApp2Theme {
+        Surface(modifier = Modifier.fillMaxSize()) {
+            VocabApp(modifier = Modifier)
+        }
     }
 }
