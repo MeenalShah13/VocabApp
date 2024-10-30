@@ -1,0 +1,35 @@
+{
+  "courseName": "Course 3",
+  "wordList": [
+    {
+      "synonyms": [
+        "conscience",
+        "morals",
+        "values",
+        "ethics",
+        "principles"
+      ],
+      "meaning": "an inner feeling or voice viewed as acting as a guide to the rightness or wrongness of one's behavior."
+    },
+    {
+      "synonyms" : ["poignant", "touching", "moving", "sad", "affecting"],
+      "meaning": "evoking a keen sense of sadness or regret."
+    },
+    {
+      "synonyms": ["curriculum", "syllabus", "timetable", "subjects"],
+      "meaning": "the subjects comprising a course of study in a school or college."
+    },
+    {
+      "synonyms": ["lascivious", "lecherous", "lewd", "lustful", "dirty"],
+      "meaning": "(of a person, manner, or gesture) feeling or revealing an overt and often offensive sexual desire."
+    },
+    {
+      "synonyms": ["hello"],
+      "meaning": "used as a greeting or to begin a phone conversation."
+    },
+    {
+      "synonyms": ["laxative"],
+      "meaning": "(chiefly of a drug or medicine) tending to stimulate or facilitate evacuation of the bowels."
+    }
+  ]
+}
