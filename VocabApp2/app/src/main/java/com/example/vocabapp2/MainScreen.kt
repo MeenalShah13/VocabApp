@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -78,8 +81,9 @@ fun CoursesScreen(modifier: Modifier = Modifier, context: Context) {
 @Composable
 fun TestScreen(context: Context, modifier: Modifier = Modifier) {
     var answer by remember { mutableStateOf("") }
-    Column(modifier = modifier,
-        verticalArrangement = Arrangement.Center,
+    Column(modifier = modifier
+        .imePadding()
+        .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally) {
         Card(modifier = modifier.padding(16.dp)
             .height(200.dp)
