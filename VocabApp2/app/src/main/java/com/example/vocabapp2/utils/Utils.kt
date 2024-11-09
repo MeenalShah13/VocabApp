@@ -1,13 +1,30 @@
 package com.example.vocabapp2.utils
 
-import android.content.Context
+import com.example.vocabapp2.R
 import com.google.gson.Gson
-import java.io.BufferedReader
-import java.util.LinkedList
+import com.google.gson.JsonElement
 
-inline fun <reified T> loadDataFromJson(fileName: String, context: Context): T {
+inline fun <reified T> loadListFromJson(jsonString: String): List<T> {
     var gson = Gson()
-    val bufferedReader: BufferedReader = context.assets.open(fileName).bufferedReader()
-    val inputString = bufferedReader.use { it.readText() }
-    return gson.fromJson(inputString, T::class.java)
+    val list = gson.fromJson(jsonString, Array<JsonElement>::class.java)
+    var result = emptyList<T>()
+    for (item in list) {
+        result += gson.fromJson(item, T::class.java)
+    }
+    return result
+}
+
+fun getSynonyms(synonyms: List<String>): String {
+    if (synonyms.size == 1) {
+        return ""
+    }
+
+    var synonymsString = "Synonyms: "
+    for (index in intArrayOf(1,(synonyms.size - 1))) {
+        synonymsString += synonyms[index]
+        if (index != synonyms.size - 1) {
+            synonymsString += ", "
+        }
+    }
+    return synonymsString
 }
