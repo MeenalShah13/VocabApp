@@ -42,10 +42,13 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.vocabapp2.model.BottomNavItem
 import com.example.vocabapp2.ui.theme.VocabApp2Theme
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.FirebaseApp
+import com.google.firebase.firestore.FirebaseFirestore
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
         enableEdgeToEdge()
         setContent {
             VocabApp2Theme {
@@ -60,6 +63,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun VocabApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
+    var firestoreDatabase: FirebaseFirestore = FirebaseFirestore.getInstance()
     val context: Context = LocalContext.current
     Scaffold(
         topBar = { TopTitleBar(modifier) },

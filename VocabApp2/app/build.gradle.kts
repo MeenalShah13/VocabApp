@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id("com.google.gms.google-services") version "4.4.2"
 }
 
 android {
@@ -40,6 +41,21 @@ android {
 }
 
 dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
+    implementation("io.grpc:grpc-okhttp:1.68.0")
+    implementation("io.grpc:grpc-protobuf-lite:1.68.0")
+    implementation("io.grpc:grpc-stub:1.68.0")
+    implementation("com.google.firebase:firebase-auth-ktx:21.0.5")  // Use the correct version
+    implementation("com.google.firebase:firebase-firestore-ktx:24.5.0")
+    implementation("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:1.6.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.13.1")
@@ -56,6 +72,7 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
