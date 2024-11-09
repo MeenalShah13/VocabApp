@@ -40,10 +40,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.vocabapp2.model.BottomNavItem
-import com.example.vocabapp2.ui.theme.VocabApp2Theme
 import androidx.navigation.compose.rememberNavController
+import com.example.vocabapp2.model.BottomNavItem
 import com.example.vocabapp2.model.CourseViewModel
+import com.example.vocabapp2.model.MyWordsViewModel
+import com.example.vocabapp2.ui.theme.VocabApp2Theme
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -68,6 +69,7 @@ fun VocabApp(modifier: Modifier = Modifier) {
     val context: Context = LocalContext.current
     var firestoreDatabase: FirebaseFirestore = FirebaseFirestore.getInstance()
     val courseViewModel: CourseViewModel = viewModel()
+    val myWordsViewModel: MyWordsViewModel = viewModel()
 
     Scaffold(
         topBar = { TopTitleBar(modifier) },
@@ -78,7 +80,7 @@ fun VocabApp(modifier: Modifier = Modifier) {
             .padding(innerPadding)
             .statusBarsPadding()
             .safeDrawingPadding()) {
-            NavHostContainer(courseViewModel, navController, firestoreDatabase, context, modifier)
+            NavHostContainer(courseViewModel, myWordsViewModel, navController, firestoreDatabase, context, modifier)
         }
     }
 }

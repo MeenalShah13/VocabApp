@@ -4,4 +4,5 @@
     <string name="empty_course_data">No Data is Present in the Database</string>
     <string name="course_navigate_route">Course_Screen</string>
     <string name="no_synonyms">No Synonyms Found</string>
+    <string name="no_words">No Words Found.\nLearn New Words from Courses!</string>
 </resources>

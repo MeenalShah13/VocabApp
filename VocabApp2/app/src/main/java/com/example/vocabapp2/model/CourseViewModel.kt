@@ -16,10 +16,6 @@ class CourseViewModel : ViewModel() {
         _course.value = course
     }
 
-    fun clearCourse() {
-        _course.value = null
-    }
-
     fun getCourseName(): String? {
         return _course.value?.courseName
     }

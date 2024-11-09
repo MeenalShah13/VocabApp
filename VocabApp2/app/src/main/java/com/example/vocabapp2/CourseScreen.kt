@@ -26,13 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vocabapp.model.WordDetails
 import com.example.vocabapp2.model.CourseViewModel
+import com.example.vocabapp2.model.MyWordsViewModel
 import com.example.vocabapp2.utils.getSynonyms
 
 @Composable
-fun CourseScreen(courseViewModel: CourseViewModel, context: Context, modifier: Modifier = Modifier) {
+fun CourseScreen(courseViewModel: CourseViewModel, myWordsViewModel: MyWordsViewModel, context: Context, modifier: Modifier = Modifier) {
     val courseWordList = courseViewModel.getWordList()
     var counter by remember { mutableStateOf(0) }
 
@@ -49,7 +49,10 @@ fun CourseScreen(courseViewModel: CourseViewModel, context: Context, modifier: M
                 Buttons(counter = counter,
                     sizeOfList = sizeOfList,
                     onLeftClick = {counter--},
-                    onRightClick = {counter++},
+                    onRightClick = {
+                        counter++
+                        myWordsViewModel.addWord(wordInfo)
+                                   },
                     modifier = modifier)
                 Spacer(modifier = modifier.weight(1f))
             }
