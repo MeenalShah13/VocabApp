@@ -42,7 +42,14 @@ android {
 }
 
 dependencies {
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("io.coil-kt:coil-compose:2.4.0")
+
     implementation("com.google.dagger:hilt-android:2.44")
+    implementation(libs.firebase.auth.ktx)
+    implementation(libs.googleid)
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     kapt("androidx.hilt:hilt-compiler:1.0.0")

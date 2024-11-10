@@ -1,5 +1,6 @@
 package com.example.vocabapp2
 
+import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,7 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 @Composable
-fun CoursesListScreen(courseViewModel: CourseViewModel, firestoreDatabase: FirebaseFirestore, navController: NavController, modifier: Modifier = Modifier) {
+fun CoursesListScreen(courseViewModel: CourseViewModel, firestoreDatabase: FirebaseFirestore, navController: NavController, context: Context, modifier: Modifier = Modifier) {
 
     var courseList by remember { mutableStateOf<List<Course>>(emptyList()) }
     var textToDisplayId: Int by remember { mutableStateOf(R.string.loading) }
@@ -72,14 +73,14 @@ fun CoursesListScreen(courseViewModel: CourseViewModel, firestoreDatabase: Fireb
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(courseList) { course ->
-                CourseCard(course, courseViewModel, navController, modifier)
+                CourseCard(course, courseViewModel, navController, context, modifier)
             }
         }
     }
 }
 
 @Composable
-fun CourseCard(course: Course, viewModel: CourseViewModel, navController: NavController, modifier: Modifier = Modifier) {
+fun CourseCard(course: Course, viewModel: CourseViewModel, navController: NavController, context: Context, modifier: Modifier = Modifier) {
     Card(modifier = modifier.padding(16.dp)
         .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(8.dp),

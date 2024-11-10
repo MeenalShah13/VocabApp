@@ -43,16 +43,14 @@ fun CourseScreen(courseViewModel: CourseViewModel, myWordsViewModel: MyWordsView
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
             courseWordList.get(counter).let { wordInfo ->
+                myWordsViewModel.addWord(wordInfo)
                 Spacer(modifier = modifier.weight(1f))
                 WordCard(wordInfo = wordInfo, modifier = modifier)
                 Spacer(modifier = modifier.weight(1f))
                 Buttons(counter = counter,
                     sizeOfList = sizeOfList,
-                    onLeftClick = {counter--},
-                    onRightClick = {
-                        counter++
-                        myWordsViewModel.addWord(wordInfo)
-                                   },
+                    onLeftClick = { counter-- },
+                    onRightClick = { counter++ },
                     modifier = modifier)
                 Spacer(modifier = modifier.weight(1f))
             }

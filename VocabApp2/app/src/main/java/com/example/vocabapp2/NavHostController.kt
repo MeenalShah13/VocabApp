@@ -18,15 +18,11 @@ fun NavHostContainer(courseViewModel: CourseViewModel, myWordsViewModel: MyWords
         startDestination = BottomNavItem.Courses.route,
         modifier = modifier
     ) {
-        composable(BottomNavItem.Courses.route) { CoursesListScreen(
-            courseViewModel,
-            firestoreDatabase,
-            navController,
-            modifier
-        ) }
+        composable(BottomNavItem.Courses.route) { CoursesListScreen(courseViewModel, firestoreDatabase, navController, context, modifier) }
         composable(BottomNavItem.Test.route) { TestScreen(context, modifier) }
         composable(BottomNavItem.Dictionary.route) { DictionaryScreen(modifier) }
         composable(BottomNavItem.My_Words.route) { MyWordsScreen(myWordsViewModel, modifier) }
         composable(R.string.course_navigate_route.toString()) { CourseScreen(courseViewModel, myWordsViewModel, context, modifier) }
+        composable(R.string.login_navigate_route.toString()) { LoginScreen(modifier)}
     }
 }

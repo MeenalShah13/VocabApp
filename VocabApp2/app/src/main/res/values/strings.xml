@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">VocabApp</string>
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
     <string name="empty_course_data">No Data is Present in the Database</string>
     <string name="course_navigate_route">Course_Screen</string>
     <string name="no_synonyms">No Synonyms Found</string>
     <string name="no_words">No Words Found.\nLearn New Words from Courses!</string>
+    <string name="login_navigate_route">Login_Screen</string>
+    <string name="google_sign_in">Sign in via Google</string>
+    <string name="sign_in">Sign In</string>
+    <string name="collection_users">users</string>
+    <string name="collections_users_my_word_list">myWordList</string>
+    <string name="collection_courses">courses</string>
 </resources>

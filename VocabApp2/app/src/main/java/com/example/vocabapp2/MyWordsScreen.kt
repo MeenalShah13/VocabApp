@@ -62,13 +62,16 @@ fun MyWordsCard(wordInfo: WordDetails, modifier: Modifier = Modifier) {
         elevation = CardDefaults.cardElevation(8.dp)
     ) {
         Column(
-            modifier = modifier.animateContentSize(
+            modifier = modifier.padding(16.dp)
+                .animateContentSize(
                     animationSpec = spring(
                         dampingRatio = Spring.DampingRatioNoBouncy,
                         stiffness = Spring.StiffnessMedium)),
             horizontalAlignment = Alignment.Start
         ) {
+
             Spacer(modifier = Modifier.weight(1f))
+
             Row(
                 modifier = modifier.fillMaxWidth()
                     .padding(8.dp),
@@ -91,6 +94,7 @@ fun MyWordsCard(wordInfo: WordDetails, modifier: Modifier = Modifier) {
                     )
                 }
             }
+
             if (expanded) {
                 Text(
                     text = wordInfo.meaning,
@@ -101,6 +105,7 @@ fun MyWordsCard(wordInfo: WordDetails, modifier: Modifier = Modifier) {
                     fontSize = 16.sp
                 )
             }
+
             Spacer(modifier = Modifier.weight(1f))
         }
     }
