@@ -1,4 +1,4 @@
-package com.example.vocabapp2.model
+package com.example.vocabapp2.viewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

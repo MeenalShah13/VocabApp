@@ -29,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.vocabapp.model.Course
 import com.example.vocabapp.model.WordDetails
-import com.example.vocabapp2.model.CourseViewModel
 import com.example.vocabapp2.utils.loadListFromJson
+import com.example.vocabapp2.viewModel.CourseViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 

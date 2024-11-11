@@ -31,8 +31,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vocabapp.model.WordDetails
-import com.example.vocabapp2.model.MyWordsViewModel
 import com.example.vocabapp2.utils.getSynonyms
+import com.example.vocabapp2.viewModel.MyWordsViewModel
 
 @Composable
 fun MyWordsScreen(myWordsViewModel: MyWordsViewModel, modifier: Modifier = Modifier) {

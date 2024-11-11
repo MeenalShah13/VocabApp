@@ -1,4 +1,4 @@
-package com.example.vocabapp2.model
+package com.example.vocabapp2.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

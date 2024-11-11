@@ -27,8 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vocabapp.model.WordDetails
-import com.example.vocabapp2.model.CourseViewModel
-import com.example.vocabapp2.model.MyWordsViewModel
+import com.example.vocabapp2.viewModel.CourseViewModel
+import com.example.vocabapp2.viewModel.MyWordsViewModel
 import com.example.vocabapp2.utils.getSynonyms
 
 @Composable

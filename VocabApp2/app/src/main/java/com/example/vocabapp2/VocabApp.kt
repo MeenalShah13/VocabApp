@@ -41,8 +41,8 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.vocabapp2.model.BottomNavItem
-import com.example.vocabapp2.model.CourseViewModel
-import com.example.vocabapp2.model.MyWordsViewModel
+import com.example.vocabapp2.viewModel.CourseViewModel
+import com.example.vocabapp2.viewModel.MyWordsViewModel
 import com.example.vocabapp2.utils.getCurrentUser
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
