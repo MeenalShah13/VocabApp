@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 
 
 sealed class BottomNavItem(val label: String, val icon: ImageVector, val route: String) {
-    object Courses : BottomNavItem("Course", Icons.Filled.Home, "Course")
+    object Courses : BottomNavItem("Courses", Icons.Filled.Home, "CoursesList")
     object Dictionary : BottomNavItem("Dictionary", Icons.AutoMirrored.Filled.List, "Dictionary")
     object Test : BottomNavItem("Test", Icons.Filled.Info, "Test")
     object My_Words : BottomNavItem("My Words", Icons.Filled.Done, "My_Words")

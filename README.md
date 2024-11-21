@@ -2,4 +2,4 @@ Vocab App
 
 Team members - Meenal Shah, Aqsa Inamdar
 
-Version - please check checkpoint-2
+Version - Checkpoint 3 - Basic Functionality.docx
