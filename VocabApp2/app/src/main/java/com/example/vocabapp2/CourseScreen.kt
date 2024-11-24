@@ -1,6 +1,6 @@
 package com.example.vocabapp2
 
-import android.content.Context
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,34 +27,49 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.vocabapp.model.WordDetails
-import com.example.vocabapp2.viewModel.CourseViewModel
-import com.example.vocabapp2.viewModel.MyWordsViewModel
 import com.example.vocabapp2.utils.getSynonyms
+import com.example.vocabapp2.viewModel.CourseListViewModel
+import com.example.vocabapp2.viewModel.MyWordsViewModel
 
 @Composable
-fun CourseScreen(courseViewModel: CourseViewModel, myWordsViewModel: MyWordsViewModel, context: Context, modifier: Modifier = Modifier) {
-    val courseWordList = courseViewModel.getWordList()
-    var counter by remember { mutableStateOf(0) }
+fun CourseScreen(navController: NavHostController, courseListViewModel: CourseListViewModel, myWordsViewModel: MyWordsViewModel, modifier: Modifier = Modifier) {
 
-    if (courseWordList != null && courseWordList.isNotEmpty()) {
-        val sizeOfList = courseWordList.size - 1
+    BackHandler {
+        courseListViewModel.clearClickedCourse()
+        navController.popBackStack()
+    }
 
-        Column(modifier = modifier.padding(16.dp),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            courseWordList.get(counter).let { wordInfo ->
-                myWordsViewModel.addWord(wordInfo)
-                Spacer(modifier = modifier.weight(1f))
-                WordCard(wordInfo = wordInfo, modifier = modifier)
-                Spacer(modifier = modifier.weight(1f))
-                Buttons(counter = counter,
-                    sizeOfList = sizeOfList,
-                    onLeftClick = { counter-- },
-                    onRightClick = { counter++ },
-                    modifier = modifier)
-                Spacer(modifier = modifier.weight(1f))
+    val courseName = courseListViewModel.getClickedCourse()
+
+    if (courseName.isBlank()) {
+        EmptyCourseScreen()
+    } else {
+        val courseWordList = courseListViewModel.getCourse(courseName)?.wordList
+        var counter by remember { mutableStateOf(0) }
+
+        if (!courseWordList.isNullOrEmpty()) {
+            val sizeOfList = courseWordList.size - 1
+
+            Column(modifier = modifier.padding(16.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally) {
+                courseWordList[counter].let { wordInfo ->
+                    myWordsViewModel.addWord(wordInfo)
+                    Spacer(modifier = modifier.weight(1f))
+                    WordCard(wordInfo = wordInfo, modifier = modifier)
+                    Spacer(modifier = modifier.weight(1f))
+                    Buttons(counter = counter,
+                        sizeOfList = sizeOfList,
+                        onLeftClick = { counter-- },
+                        onRightClick = { counter++ },
+                        modifier = modifier)
+                    Spacer(modifier = modifier.weight(1f))
+                }
             }
+        } else {
+            EmptyCourseScreen()
         }
     }
 }
@@ -103,6 +119,15 @@ fun Buttons(counter: Int, sizeOfList: Int, onLeftClick: () -> Unit, onRightClick
                 Icon(imageVector = Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "Next")
             }
         }
+    }
+}
+
+@Composable
+fun EmptyCourseScreen() {
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = "Course is empty",
+            style = MaterialTheme.typography.displayMedium)
     }
 }
 

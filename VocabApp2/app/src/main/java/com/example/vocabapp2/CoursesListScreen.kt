@@ -1,6 +1,5 @@
 package com.example.vocabapp2
 
-import android.content.Context
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,50 +14,23 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.vocabapp.model.Course
-import com.example.vocabapp.model.WordDetails
-import com.example.vocabapp2.utils.loadListFromJson
-import com.example.vocabapp2.viewModel.CourseViewModel
-import com.google.firebase.firestore.FirebaseFirestore
+import com.example.vocabapp2.viewModel.CourseListViewModel
 
 @Composable
-fun CoursesListScreen(courseViewModel: CourseViewModel, firestoreDatabase: FirebaseFirestore, navController: NavController, context: Context, modifier: Modifier = Modifier) {
+fun CoursesListScreen(courseListViewModel: CourseListViewModel, navController: NavController, modifier: Modifier = Modifier) {
 
-    var courseList by remember { mutableStateOf<List<Course>>(emptyList()) }
-    var textToDisplayId: Int by remember { mutableStateOf(R.string.loading) }
-
-    // Load JSON data when the Composable is launched
-    LaunchedEffect(Unit) {
-        firestoreDatabase.collection("courses").get()
-            .addOnSuccessListener { queryDocumentSnapshots ->
-                if (!queryDocumentSnapshots.isEmpty) {
-                    val coursesListFromCloud = queryDocumentSnapshots.documents
-                    for (course in coursesListFromCloud) {
-                        val c = Course(course.id, course.get("courseName").toString())
-                        c.wordList = loadListFromJson<WordDetails>(course.get("wordList").toString())
-                        courseList += c
-                    }
-                } else {
-                    textToDisplayId = R.string.empty_course_data
-                }
-            }
-    }
+    val courseList = courseListViewModel.getCourseNames()
 
     if (courseList.isEmpty())  {
         Column(verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(stringResource(textToDisplayId),
+            Text(stringResource(R.string.empty_course_data),
                 style = MaterialTheme.typography.displayMedium)
         }
     } else {
@@ -66,26 +38,26 @@ fun CoursesListScreen(courseViewModel: CourseViewModel, firestoreDatabase: Fireb
             modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            items(courseList) { course ->
-                CourseCard(course, courseViewModel, navController, context, modifier)
+            items(courseList) { courseName ->
+                CourseCard(courseName, courseListViewModel, navController, modifier)
             }
         }
     }
 }
 
 @Composable
-fun CourseCard(course: Course, viewModel: CourseViewModel, navController: NavController, context: Context, modifier: Modifier = Modifier) {
+fun CourseCard(courseName: String, viewModel: CourseListViewModel, navController: NavController, modifier: Modifier = Modifier) {
     Card(modifier = modifier.padding(16.dp)
         .fillMaxWidth(),
         elevation = CardDefaults.cardElevation(8.dp),
         onClick = {
-            viewModel.setCourse(course)
+            viewModel.setClickedCourse(courseName)
             navController.navigate("Course_Screen")
         }) {
         Spacer(modifier.height(20.dp))
         Row {
             Text(
-                text = course.courseName,
+                text = courseName,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.displaySmall,
                 modifier = modifier.weight(2f)

@@ -12,17 +12,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import com.example.vocabapp2.ui.theme.VocabApp2Theme
+import com.example.vocabapp2.viewModel.CourseListViewModel
 import com.example.vocabapp2.viewModel.MyWordsViewModel
 import com.google.firebase.FirebaseApp
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var myWordsViewModel: MyWordsViewModel
+    private lateinit var courseListViewModel: CourseListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
         myWordsViewModel = ViewModelProvider(this)[MyWordsViewModel::class.java]
+        courseListViewModel = ViewModelProvider(this)[CourseListViewModel::class.java]
         enableEdgeToEdge()
         installSplashScreen()
         setContent {

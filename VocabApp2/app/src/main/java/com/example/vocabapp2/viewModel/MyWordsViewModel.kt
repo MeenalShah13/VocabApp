@@ -10,14 +10,11 @@ import com.example.vocabapp2.utils.loadSetFromJson
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MyWordsViewModel : ViewModel() {
     private val firestore = FirebaseFirestore.getInstance()
     private val _myWords = MutableStateFlow<Set<WordDetails>>(emptySet())
-    val myWords: StateFlow<Set<WordDetails>> = _myWords.asStateFlow()
 
     init {
         loadMyWordsList()
@@ -69,7 +66,7 @@ class MyWordsViewModel : ViewModel() {
 
     fun loadMyWordsList() {
         val userId = getCurrentUser()?.email ?: return
-        val userDocRef = firestore.collection("users").document(userId).addSnapshotListener {
+        firestore.collection("users").document(userId).addSnapshotListener {
             snapshot, error ->
             if (error != null) {
                 Log.e("MyWordsViewModel", "Failed to Update Words in Cloud: \n" + error.message.toString())

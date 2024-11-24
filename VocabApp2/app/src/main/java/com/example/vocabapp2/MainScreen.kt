@@ -25,7 +25,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.vocabapp2.model.BottomNavItem
 import com.example.vocabapp2.utils.getCurrentUser
-import com.example.vocabapp2.viewModel.CourseViewModel
+import com.example.vocabapp2.viewModel.CourseListViewModel
 import com.example.vocabapp2.viewModel.MyWordsViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
@@ -33,7 +33,7 @@ import kotlin.system.exitProcess
 
 
 @Composable
-fun MainScreen(firestoreDatabase: FirebaseFirestore, courseViewModel: CourseViewModel, myWordsViewModel: MyWordsViewModel, navController: NavHostController, context: Context, modifier: Modifier = Modifier) {
+fun MainScreen(firestoreDatabase: FirebaseFirestore, courseListViewModel: CourseListViewModel, myWordsViewModel: MyWordsViewModel, navController: NavHostController, context: Context, modifier: Modifier = Modifier) {
     val mainScreenNavController = rememberNavController()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
@@ -91,7 +91,7 @@ fun MainScreen(firestoreDatabase: FirebaseFirestore, courseViewModel: CourseView
                     .safeDrawingPadding()
             ) {
                 MainScreenNavHostContainer(
-                    courseViewModel,
+                    courseListViewModel,
                     myWordsViewModel,
                     mainScreenNavController,
                     firestoreDatabase,
