@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -34,7 +35,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
 @Composable
-fun LoginScreen(modifier: Modifier = Modifier) {
+fun LoginScreen(navController: NavHostController, modifier: Modifier = Modifier) {
     var user by remember { mutableStateOf(Firebase.auth.currentUser) }
     val launcher = rememberFirebaseAuthLauncher(
         onAuthComplete = { result ->
@@ -68,27 +69,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                     Text(stringResource(R.string.google_sign_in))
                 }
             } else {
-                VocabApp(modifier)
-//                AsyncImage(
-//                    model = ImageRequest.Builder(context)
-//                        .data(user!!.photoUrl)
-//                        .crossfade(true)
-//                        .build(),
-//                    contentScale = ContentScale.Crop,
-//                    contentDescription = null,
-//                    modifier = Modifier
-//                        .size(96.dp)
-//                        .clip(CircleShape)
-//                )
-//                Spacer(Modifier.height(8.dp))
-//                Text("Welcome ${user!!.displayName}")
-//                Spacer(Modifier.height(10.dp))
-//                Button(onClick = {
-//                    Firebase.auth.signOut()
-//                    user = null
-//                }) {
-//                    Text("Sign out")
-//                }
+                navController.navigate("MainScreen")
             }
         }
     }
@@ -113,4 +94,8 @@ fun rememberFirebaseAuthLauncher(
             onAuthError(e)
         }
     }
+}
+
+fun signOut() {
+    Firebase.auth.signOut()
 }

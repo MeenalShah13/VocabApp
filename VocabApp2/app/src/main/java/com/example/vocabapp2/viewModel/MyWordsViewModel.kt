@@ -53,7 +53,7 @@ class MyWordsViewModel : ViewModel() {
     }
 
     private fun updateWordsToCloud(words: Set<WordDetails>) {
-        val userId = getCurrentUser()?.uid ?: return
+        val userId = getCurrentUser()?.email ?: return
         val wordsJsonString = convertToJsonString(words)
 
         firestore.collection("users")
@@ -68,7 +68,7 @@ class MyWordsViewModel : ViewModel() {
     }
 
     fun loadMyWordsList() {
-        val userId = getCurrentUser()?.uid ?: return
+        val userId = getCurrentUser()?.email ?: return
         val userDocRef = firestore.collection("users").document(userId).addSnapshotListener {
             snapshot, error ->
             if (error != null) {

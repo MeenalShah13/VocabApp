@@ -86,7 +86,7 @@ fun CourseCard(course: Course, viewModel: CourseViewModel, navController: NavCon
         elevation = CardDefaults.cardElevation(8.dp),
         onClick = {
             viewModel.setCourse(course)
-            navController.navigate(R.string.course_navigate_route.toString())
+            navController.navigate("Course_Screen")
         }) {
         Spacer(modifier.height(20.dp))
         Row {
