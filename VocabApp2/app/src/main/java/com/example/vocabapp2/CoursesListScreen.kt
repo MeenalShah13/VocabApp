@@ -19,7 +19,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,7 +31,6 @@ import com.example.vocabapp.model.WordDetails
 import com.example.vocabapp2.utils.loadListFromJson
 import com.example.vocabapp2.viewModel.CourseViewModel
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.launch
 
 @Composable
 fun CoursesListScreen(courseViewModel: CourseViewModel, firestoreDatabase: FirebaseFirestore, navController: NavController, context: Context, modifier: Modifier = Modifier) {
@@ -40,25 +38,21 @@ fun CoursesListScreen(courseViewModel: CourseViewModel, firestoreDatabase: Fireb
     var courseList by remember { mutableStateOf<List<Course>>(emptyList()) }
     var textToDisplayId: Int by remember { mutableStateOf(R.string.loading) }
 
-    val coroutineScope = rememberCoroutineScope()
-
     // Load JSON data when the Composable is launched
     LaunchedEffect(Unit) {
-        coroutineScope.launch {
-            firestoreDatabase.collection("courses").get()
-                .addOnSuccessListener { queryDocumentSnapshots ->
-                    if (!queryDocumentSnapshots.isEmpty) {
-                        val coursesListFromCloud = queryDocumentSnapshots.documents
-                        for (course in coursesListFromCloud) {
-                            val c = Course(course.id, course.get("courseName").toString())
-                            c.wordList = loadListFromJson<WordDetails>(course.get("wordList").toString())
-                            courseList += c
-                        }
-                    } else {
-                        textToDisplayId = R.string.empty_course_data
+        firestoreDatabase.collection("courses").get()
+            .addOnSuccessListener { queryDocumentSnapshots ->
+                if (!queryDocumentSnapshots.isEmpty) {
+                    val coursesListFromCloud = queryDocumentSnapshots.documents
+                    for (course in coursesListFromCloud) {
+                        val c = Course(course.id, course.get("courseName").toString())
+                        c.wordList = loadListFromJson<WordDetails>(course.get("wordList").toString())
+                        courseList += c
                     }
+                } else {
+                    textToDisplayId = R.string.empty_course_data
                 }
-        }
+            }
     }
 
     if (courseList.isEmpty())  {
