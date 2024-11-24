@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
-        myWordsViewModel = ViewModelProvider(this).get(MyWordsViewModel::class.java)
+        myWordsViewModel = ViewModelProvider(this)[MyWordsViewModel::class.java]
         enableEdgeToEdge()
         installSplashScreen()
         setContent {

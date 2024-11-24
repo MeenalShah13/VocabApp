@@ -45,6 +45,14 @@ fun getSynonyms(synonyms: List<String>): String {
     return synonymsString
 }
 
+fun getFirstName(fullName: String?): String {
+    if (fullName.isNullOrBlank()) {
+        return ""
+    }
+    val firstName = fullName.split(" ")[0]
+    return firstName
+}
+
 fun getCurrentUser(): FirebaseUser? {
     val auth = FirebaseAuth.getInstance()
     return auth.currentUser
