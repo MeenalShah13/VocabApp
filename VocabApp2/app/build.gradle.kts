@@ -42,8 +42,13 @@ android {
 }
 
 dependencies {
+
+    implementation("androidx.compose.ui:ui:1.5.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("androidx.compose.material3:material3:1.0.0") // For Material3 components
+    implementation("androidx.compose.material:material-icons-core:1.5.0") // For Material Icons
+    implementation("androidx.compose.material:material-icons-extended:1.5.0")// For extended icons (optional, but recommended)
 
     implementation("androidx.core:core-splashscreen:1.0.1")
 
@@ -53,6 +58,7 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.44")
     implementation(libs.firebase.auth.ktx)
     implementation(libs.googleid)
+    implementation(libs.androidx.benchmark.macro)
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     kapt("androidx.hilt:hilt-compiler:1.0.0")

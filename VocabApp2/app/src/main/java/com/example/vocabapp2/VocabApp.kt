@@ -1,6 +1,8 @@
 package com.example.vocabapp2
 
 import android.content.Context
+import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,15 +14,13 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults.windowInsets
-import androidx.compose.material3.Button
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -29,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
@@ -51,99 +52,121 @@ import com.google.firebase.firestore.FirebaseFirestore
 fun VocabApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val context: Context = LocalContext.current
-    var firestoreDatabase: FirebaseFirestore = FirebaseFirestore.getInstance()
+    val firestoreDatabase: FirebaseFirestore = FirebaseFirestore.getInstance()
     val courseViewModel: CourseViewModel = viewModel()
     val myWordsViewModel: MyWordsViewModel = viewModel()
-
     Scaffold(
         topBar = { TopTitleBar(context, modifier) },
-        bottomBar = { BottomNavigationBar(navController = navController, modifier = modifier) },
+        bottomBar = { BottomNavigationBar(navController = navController) },
         modifier = modifier.fillMaxSize()
     ) { innerPadding ->
-        Surface(modifier = modifier.fillMaxSize()
-            .padding(innerPadding)
-            .statusBarsPadding()
-            .safeDrawingPadding()) {
-            NavHostContainer(courseViewModel, myWordsViewModel, navController, firestoreDatabase, context, modifier)
+        Surface(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .statusBarsPadding()
+                .safeDrawingPadding()
+        ) {
+            NavHostContainer(
+                courseViewModel,
+                myWordsViewModel,
+                navController,
+                firestoreDatabase,
+                context,
+                modifier
+            )
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopTitleBar(context: Context, modifier: Modifier = Modifier) {
     val user: FirebaseUser? = getCurrentUser()
-    CenterAlignedTopAppBar(
-        title = {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp)
+    ) {
+        Text(
+            text = "VocabApp",
+            style = MaterialTheme.typography.headlineMedium,
+            fontSize = 30.sp,
+            modifier = Modifier.weight(1f),
+            textAlign = TextAlign.Start
+        )
+        if (user != null && !user.displayName.isNullOrBlank()) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Spacer(modifier.weight(4f))
-                Text(
-                    text = "VocabApp",
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.headlineMedium
+                AsyncImage(
+                    model = ImageRequest.Builder(context)
+                        .data(user.photoUrl)
+                        .crossfade(true)
+                        .build(),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(36.dp)
+                        .clip(MaterialTheme.shapes.small)
                 )
-                Spacer(modifier.weight(1f))
-                Row(
-                    modifier.padding(16.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    if (user != null) {
-                        AsyncImage(model = ImageRequest.Builder(context)
-                            .data(user.photoUrl)
-                            .crossfade(true)
-                            .build(),
-                            contentScale = ContentScale.Crop,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .size(25.dp)
-                                .clip(CircleShape))
-                        Spacer(modifier.width(5.dp))
-                        Text(text = getFirstName(user.displayName),
-                            style = MaterialTheme.typography.labelMedium)
-                    }
-                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = getFirstName(user.displayName),
+                    style = MaterialTheme.typography.labelMedium
+                )
             }
-        },
-        modifier = modifier
-    )
+        } else {
+            Log.d("TopTitleBar", "User not logged in or displayName is null.")
+        }
+    }
+}
+@Composable
+fun BottomNavigationBar(navController: NavHostController) {
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val selectedRoute = currentBackStackEntry?.destination?.route
+
+    NavigationBar {
+        val items = listOf(
+            BottomNavItem.Courses,
+            BottomNavItem.Test,
+            BottomNavItem.Dictionary,
+            BottomNavItem.My_Words
+        )
+
+        items.forEach { item ->
+            val isSelected = item.route == selectedRoute
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = item.title
+                    )
+                },
+                label = { Text(item.title) },
+                selected = isSelected,
+                onClick = {
+                    if (selectedRoute != item.route) {
+                        navController.navigate(item.route) {
+                            popUpTo(navController.graph.startDestinationId) { saveState = true }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    }
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = Color(0xFFFFA726), // Highlighted color for selected page
+                    selectedTextColor = Color(0xFFFFA726),
+                    unselectedIconColor = Color.Gray, // Default color for unselected items
+                    unselectedTextColor = Color.Gray
+                )
+            )
+        }
+    }
 }
 
 
-
-@Composable
-fun BottomNavigationBar(navController: NavHostController, modifier: Modifier = Modifier) {
-    val items = listOf(
-        BottomNavItem.Courses,
-        BottomNavItem.Dictionary,
-        BottomNavItem.Test,
-        BottomNavItem.My_Words
-    )
-    BottomAppBar (modifier = modifier) {
-        val currentRoute = currentRoute(navController)
-        Row(modifier = Modifier
-            .fillMaxWidth()
-            .windowInsetsPadding(windowInsets),
-            horizontalArrangement = Arrangement.SpaceEvenly,
-            verticalAlignment = Alignment.CenterVertically) {
-            items.forEach { item ->
-                Button(onClick = {
-                    navController.navigate(item.route) {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    }
-                }) {
-                    Column(verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally) {
-                        Icon(item.icon, contentDescription = item.label)
-                        Text(text = item.label, textAlign = TextAlign.Center, fontSize = 11.sp)
-                    }
-                }
-            }
-        }
-    }
+fun getFirstName(fullName: String?): String {
+    return fullName?.split(" ")?.getOrNull(0) ?: ""
 }
 
 @Composable
@@ -152,10 +175,3 @@ fun currentRoute(navController: NavHostController): String? {
     return navBackStackEntry?.destination?.route
 }
 
-fun getFirstName(fullName: String?): String {
-    if (fullName.isNullOrBlank()) {
-        return ""
-    }
-    val firstName = fullName.split(" ")[0]
-    return firstName
-}

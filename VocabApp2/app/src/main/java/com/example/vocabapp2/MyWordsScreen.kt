@@ -25,6 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import com.example.vocabapp.model.WordDetails
 import com.example.vocabapp2.utils.getSynonyms
 import com.example.vocabapp2.viewModel.MyWordsViewModel
+
 
 @Composable
 fun MyWordsScreen(myWordsViewModel: MyWordsViewModel, modifier: Modifier = Modifier) {
@@ -55,26 +57,28 @@ fun MyWordsScreen(myWordsViewModel: MyWordsViewModel, modifier: Modifier = Modif
 @Composable
 fun MyWordsCard(wordInfo: WordDetails, modifier: Modifier = Modifier) {
     var expanded by remember { mutableStateOf(false) }
+
     Card(
         modifier = modifier
             .padding(16.dp)
-            .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(8.dp)
+            .fillMaxWidth()
+            .animateContentSize( // Smooth animation when expanding or contracting
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioNoBouncy,
+                    stiffness = Spring.StiffnessMedium
+                )
+            ),
+        elevation = CardDefaults.cardElevation(8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (expanded) Color(0xfffaa191) else Color(0xFFFFE4C4) // Orange when expanded, light gray otherwise
+        )
     ) {
         Column(
-            modifier = modifier.padding(16.dp)
-                .animateContentSize(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioNoBouncy,
-                        stiffness = Spring.StiffnessMedium)),
+            modifier = modifier.padding(16.dp),
             horizontalAlignment = Alignment.Start
         ) {
-
-            Spacer(modifier = Modifier.weight(1f))
-
             Row(
-                modifier = modifier.fillMaxWidth()
-                    .padding(8.dp),
+                modifier = modifier.fillMaxWidth().padding(8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
@@ -85,7 +89,7 @@ fun MyWordsCard(wordInfo: WordDetails, modifier: Modifier = Modifier) {
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 IconButton(
-                    onClick = { expanded = !expanded },
+                    onClick = { expanded = !expanded }, // Toggle dropdown
                     modifier = modifier
                 ) {
                     Icon(
@@ -96,17 +100,20 @@ fun MyWordsCard(wordInfo: WordDetails, modifier: Modifier = Modifier) {
             }
 
             if (expanded) {
+                // Display the expanded content
                 Text(
                     text = wordInfo.meaning,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(top = 8.dp)
                 )
                 Text(
                     text = getSynonyms(wordInfo.synonyms),
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
+                    modifier = Modifier.padding(top = 4.dp)
                 )
             }
-
-            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }
+
+

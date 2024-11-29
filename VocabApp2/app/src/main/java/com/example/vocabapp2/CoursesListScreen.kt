@@ -23,6 +23,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,10 +36,16 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.launch
 
 @Composable
-fun CoursesListScreen(courseViewModel: CourseViewModel, firestoreDatabase: FirebaseFirestore, navController: NavController, context: Context, modifier: Modifier = Modifier) {
-
+fun CoursesListScreen(
+    courseViewModel: CourseViewModel,
+    firestoreDatabase: FirebaseFirestore,
+    navController: NavController,
+    context: Context,
+    modifier: Modifier = Modifier
+) {
     var courseList by remember { mutableStateOf<List<Course>>(emptyList()) }
     var textToDisplayId: Int by remember { mutableStateOf(R.string.loading) }
+    var selectedCourseId by remember { mutableStateOf<String?>(null) } // To track the selected course
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -61,11 +68,15 @@ fun CoursesListScreen(courseViewModel: CourseViewModel, firestoreDatabase: Fireb
         }
     }
 
-    if (courseList.isEmpty())  {
-        Column(verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(stringResource(textToDisplayId),
-                style = MaterialTheme.typography.displayMedium)
+    if (courseList.isEmpty()) {
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                stringResource(textToDisplayId),
+                style = MaterialTheme.typography.displayMedium
+            )
         }
     } else {
         LazyColumn(
@@ -73,21 +84,45 @@ fun CoursesListScreen(courseViewModel: CourseViewModel, firestoreDatabase: Fireb
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             items(courseList) { course ->
-                CourseCard(course, courseViewModel, navController, context, modifier)
+                CourseCard(
+                    course = course,
+                    viewModel = courseViewModel,
+                    navController = navController,
+                    context = context,
+                    isSelected = selectedCourseId == course.courseId,
+                    onCourseClick = { selectedCourseId = course.courseId }, // Update selected course
+                    modifier = modifier
+                )
             }
         }
     }
 }
 
 @Composable
-fun CourseCard(course: Course, viewModel: CourseViewModel, navController: NavController, context: Context, modifier: Modifier = Modifier) {
-    Card(modifier = modifier.padding(16.dp)
-        .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(8.dp),
+fun CourseCard(
+    course: Course,
+    viewModel: CourseViewModel,
+    navController: NavController,
+    context: Context,
+    isSelected: Boolean,
+    onCourseClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val cardBackgroundColor = if (isSelected) Color(0xffff6347) else Color(0xFFFFE4C4)
+    val cardElevation = if (isSelected) 16.dp else 8.dp
+
+    Card(
+        modifier = modifier
+            .padding(16.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.cardColors(containerColor = cardBackgroundColor),
+        elevation = CardDefaults.cardElevation(cardElevation),
         onClick = {
+            onCourseClick()
             viewModel.setCourse(course)
             navController.navigate(R.string.course_navigate_route.toString())
-        }) {
+        }
+    ) {
         Spacer(modifier.height(20.dp))
         Row {
             Text(
