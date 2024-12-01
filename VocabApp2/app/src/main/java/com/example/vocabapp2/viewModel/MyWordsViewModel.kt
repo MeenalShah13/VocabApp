@@ -10,14 +10,11 @@ import com.example.vocabapp2.utils.loadSetFromJson
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class MyWordsViewModel : ViewModel() {
     private val firestore = FirebaseFirestore.getInstance()
     private val _myWords = MutableStateFlow<Set<WordDetails>>(emptySet())
-    val myWords: StateFlow<Set<WordDetails>> = _myWords.asStateFlow()
 
     init {
         loadMyWordsList()
@@ -25,7 +22,10 @@ class MyWordsViewModel : ViewModel() {
     }
 
     fun addWord(word: WordDetails) {
-        _myWords.value = _myWords.value + word
+        if (_myWords.value.any { checkIfWordExists(word, it) }) {
+            return
+        }
+        _myWords.value += word
     }
 
     fun sizeOfWordList(): Int {
@@ -41,6 +41,19 @@ class MyWordsViewModel : ViewModel() {
         updateWordsToCloud(currentWords)
     }
 
+    fun loadMyWordsList() {
+        val userId = getCurrentUser()?.email ?: return
+        firestore.collection("users").document(userId).addSnapshotListener {
+                snapshot, error ->
+            if (error != null) {
+                Log.e("MyWordsViewModel", "Failed to Update Words in Cloud: \n" + error.message.toString())
+            }
+            if (snapshot != null && snapshot.exists()) {
+                _myWords.value = loadSetFromJson<WordDetails>(snapshot.get("myWordsList").toString())
+            }
+        }
+    }
+
     private fun startPeriodicCloudUpdate() {
         viewModelScope.launch {
             while (true) {
@@ -52,8 +65,12 @@ class MyWordsViewModel : ViewModel() {
         }
     }
 
+    private fun checkIfWordExists(newWordDetails: WordDetails, existingWordDetails: WordDetails): Boolean {
+        return newWordDetails.synonyms.any { it in existingWordDetails.synonyms }
+    }
+
     private fun updateWordsToCloud(words: Set<WordDetails>) {
-        val userId = getCurrentUser()?.uid ?: return
+        val userId = getCurrentUser()?.email ?: return
         val wordsJsonString = convertToJsonString(words)
 
         firestore.collection("users")
@@ -65,18 +82,5 @@ class MyWordsViewModel : ViewModel() {
             .addOnFailureListener { error ->
                 Log.e("MyWordsViewModel", "Failed to Update Words in Cloud: \n" + error.message.toString())
             }
-    }
-
-    fun loadMyWordsList() {
-        val userId = getCurrentUser()?.uid ?: return
-        val userDocRef = firestore.collection("users").document(userId).addSnapshotListener {
-            snapshot, error ->
-            if (error != null) {
-                Log.e("MyWordsViewModel", "Failed to Update Words in Cloud: \n" + error.message.toString())
-            }
-            if (snapshot != null && snapshot.exists()) {
-                _myWords.value = loadSetFromJson<WordDetails>(snapshot.get("myWordsList").toString())
-            }
-        }
     }
 }

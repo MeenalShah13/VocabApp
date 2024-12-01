@@ -15,6 +15,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,27 +24,26 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vocabapp.model.WordDetails
+import com.example.vocabapp2.utils.getSynonyms
 import com.example.vocabapp2.viewModel.CourseViewModel
 import com.example.vocabapp2.viewModel.MyWordsViewModel
-import com.example.vocabapp2.utils.getSynonyms
 
 @Composable
 fun CourseScreen(courseViewModel: CourseViewModel, myWordsViewModel: MyWordsViewModel, context: Context, modifier: Modifier = Modifier) {
     val courseWordList = courseViewModel.getWordList()
     var counter by remember { mutableStateOf(0) }
 
-    if (courseWordList != null && courseWordList.isNotEmpty()) {
+    if (!courseWordList.isNullOrEmpty()) {
         val sizeOfList = courseWordList.size - 1
 
         Column(modifier = modifier.padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally) {
-            courseWordList.get(counter).let { wordInfo ->
+            courseWordList[counter].let { wordInfo ->
                 myWordsViewModel.addWord(wordInfo)
                 Spacer(modifier = modifier.weight(1f))
                 WordCard(wordInfo = wordInfo, modifier = modifier)
@@ -64,7 +64,7 @@ fun WordCard(wordInfo: WordDetails, modifier: Modifier = Modifier) {
     Card(
         modifier = modifier
             .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE4C4)), // Light peach background
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer), // Light peach background
         elevation = CardDefaults.cardElevation(8.dp)
     ) {
         Spacer(modifier = modifier.height(20.dp))

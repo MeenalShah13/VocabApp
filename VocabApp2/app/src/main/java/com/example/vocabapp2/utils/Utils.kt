@@ -49,3 +49,11 @@ fun getCurrentUser(): FirebaseUser? {
     val auth = FirebaseAuth.getInstance()
     return auth.currentUser
 }
+
+fun getFirstName(fullName: String?): String {
+    if (fullName.isNullOrBlank()) {
+        return ""
+    }
+    val firstName = fullName.split(" ")[0]
+    return firstName
+}

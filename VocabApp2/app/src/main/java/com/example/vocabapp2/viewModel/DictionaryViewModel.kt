@@ -31,7 +31,6 @@ class DictionaryViewModel : ViewModel() {
                     }
 
                     resultWord.value = WordDetails(
-                        id = null,
                         synonyms = wordList,
                         meaning = firstDefinition.orEmpty(),
                         pronounciation = null

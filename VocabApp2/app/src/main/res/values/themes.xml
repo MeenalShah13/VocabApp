@@ -7,5 +7,5 @@
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <style name="Theme.VocabApp2" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.AppTheme" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>
