@@ -120,7 +120,7 @@ fun CourseCard(
         onClick = {
             onCourseClick()
             viewModel.setCourse(course)
-            navController.navigate(R.string.course_navigate_route.toString())
+            navController.navigate("CourseScreen")
         }
     ) {
         Spacer(modifier.height(20.dp))

@@ -2,7 +2,7 @@
     <string name="app_name">VocabApp</string>
     <string name="loading">Loading…</string>
     <string name="empty_course_data">No Data is Present in the Database</string>
-    <string name="course_navigate_route">Course_Screen</string>
+    <string name="course_navigate_route">CourseScreen</string>
     <string name="no_synonyms">No Synonyms Found</string>
     <string name="no_words">No Words Found.\nLearn New Words from Courses!</string>
     <string name="login_navigate_route">Login_Screen</string>
@@ -11,4 +11,7 @@
     <string name="collection_users">users</string>
     <string name="collections_users_my_word_list">myWordList</string>
     <string name="collection_courses">courses</string>
+    <string name="user_not_logged_in">User Is Not Logged In</string>
+    <string name="guest_sign_in">Continue as Guest</string>
+    <string name="progress_warning">Please note that your progress will not be saved online if you do not sign in.</string>
 </resources>

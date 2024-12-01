@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface DictionaryApiService {
     @GET("en/{word}")
-    abstract suspend fun getWordData(
+    suspend fun getWordData(
         @Path("word") word: String
     ): Response<List<WordResponse>>
 }

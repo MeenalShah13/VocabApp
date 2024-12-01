@@ -25,7 +25,14 @@ class MyWordsViewModel : ViewModel() {
     }
 
     fun addWord(word: WordDetails) {
-        _myWords.value = _myWords.value + word
+        if (_myWords.value.any { checkIfWordExists(word, it) }) {
+            return
+        }
+        _myWords.value += word
+    }
+
+    private fun checkIfWordExists(newWordDetails: WordDetails, existingWordDetails: WordDetails): Boolean {
+        return newWordDetails.synonyms.any { it in existingWordDetails.synonyms }
     }
 
     fun sizeOfWordList(): Int {
@@ -53,7 +60,7 @@ class MyWordsViewModel : ViewModel() {
     }
 
     private fun updateWordsToCloud(words: Set<WordDetails>) {
-        val userId = getCurrentUser()?.uid ?: return
+        val userId = getCurrentUser()?.email ?: return
         val wordsJsonString = convertToJsonString(words)
 
         firestore.collection("users")
@@ -68,7 +75,7 @@ class MyWordsViewModel : ViewModel() {
     }
 
     fun loadMyWordsList() {
-        val userId = getCurrentUser()?.uid ?: return
+        val userId = getCurrentUser()?.email ?: return
         val userDocRef = firestore.collection("users").document(userId).addSnapshotListener {
             snapshot, error ->
             if (error != null) {

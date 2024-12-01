@@ -1,6 +1,5 @@
 package com.example.vocabapp2
 
-import androidx.benchmark.perfetto.Row
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row

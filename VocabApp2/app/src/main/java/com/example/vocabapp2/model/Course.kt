@@ -10,4 +10,4 @@ data class Course(
     val courseId: String = UUID.randomUUID().toString(),
     val courseName: String,
     var wordList: List<WordDetails> = emptyList()
-    )
+)

@@ -43,12 +43,12 @@ android {
 
 dependencies {
 
-    implementation("androidx.compose.ui:ui:1.5.0")
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("androidx.compose.material3:material3:1.0.0") // For Material3 components
-    implementation("androidx.compose.material:material-icons-core:1.5.0") // For Material Icons
-    implementation("androidx.compose.material:material-icons-extended:1.5.0")// For extended icons (optional, but recommended)
+    implementation(libs.ui)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.material3) // For Material3 components
+    implementation(libs.androidx.material.icons.core) // For Material Icons
+    implementation(libs.androidx.material.icons.extended)// For extended icons (optional, but recommended)
 
     implementation("androidx.core:core-splashscreen:1.0.1")
 
