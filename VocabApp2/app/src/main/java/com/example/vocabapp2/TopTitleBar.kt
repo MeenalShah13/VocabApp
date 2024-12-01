@@ -32,7 +32,11 @@ import com.example.vocabapp2.utils.getFirstName
 import com.google.firebase.auth.FirebaseUser
 
 @Composable
-fun TopTitleBar(onClickSignedIn: () -> Unit, user: FirebaseUser?, launcher: ManagedActivityResultLauncher<Intent, ActivityResult>, context: Context, modifier: Modifier = Modifier) {
+fun TopTitleBar(onClickSignedIn: () -> Unit,
+                user: FirebaseUser?,
+                launcher: ManagedActivityResultLauncher<Intent, ActivityResult>,
+                context: Context,
+                modifier: Modifier = Modifier) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -56,7 +60,11 @@ fun TopTitleBar(onClickSignedIn: () -> Unit, user: FirebaseUser?, launcher: Mana
 }
 
 @Composable
-fun UserMenuButton(onClickSignedIn: () -> Unit, launcher: ManagedActivityResultLauncher<Intent, ActivityResult>, user: FirebaseUser?, context: Context, modifier: Modifier = Modifier) {
+fun UserMenuButton(onClickSignedIn: () -> Unit,
+                   launcher: ManagedActivityResultLauncher<Intent, ActivityResult>,
+                   user: FirebaseUser?,
+                   context: Context,
+                   modifier: Modifier = Modifier) {
     if (user != null && !user.displayName.isNullOrBlank()) {
         Row(verticalAlignment = Alignment.CenterVertically,
             modifier = modifier.clickable { onClickSignedIn() }) {

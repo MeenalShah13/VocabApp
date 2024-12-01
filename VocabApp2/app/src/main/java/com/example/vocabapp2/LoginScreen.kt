@@ -40,6 +40,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.vocabapp2.viewModel.MyWordsViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -219,6 +221,7 @@ fun rememberFirebaseAuthLauncher(
     onAuthError: (ApiException) -> Unit,
 ): ManagedActivityResultLauncher<Intent, ActivityResult> {
     val scope = rememberCoroutineScope()
+    val myWordsViewModel = viewModel<MyWordsViewModel>()
     return rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
         try {
@@ -227,6 +230,7 @@ fun rememberFirebaseAuthLauncher(
             scope.launch {
                 val authResult = Firebase.auth.signInWithCredential(credential).await()
                 onAuthComplete(authResult)
+                myWordsViewModel.loadMyWordsList()
             }
         } catch (e: ApiException) {
             onAuthError(e)
