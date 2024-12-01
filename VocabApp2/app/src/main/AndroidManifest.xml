@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:enableOnBackInvokedCallback="true"
-        android:theme="@style/Theme.VocabApp2"
+        android:theme="@style/Theme.AppTheme"
         tools:targetApi="31">
         <activity
             android:name=".MainActivity"

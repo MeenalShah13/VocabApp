@@ -42,6 +42,9 @@ android {
 }
 
 dependencies {
+    //Google Fonts
+    implementation(libs.androidx.ui.text.google.fonts)
+    implementation(libs.play.services.auth)
 
     implementation(libs.ui)
     implementation(libs.retrofit)

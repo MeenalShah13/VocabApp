@@ -88,13 +88,11 @@ fun VocabApp(modifier: Modifier = Modifier) {
                     navController = navController
                 )
             },
-            modifier = modifier.fillMaxSize()
+            modifier = modifier.fillMaxSize().statusBarsPadding().safeDrawingPadding()
         ) { innerPadding ->
             Surface(
                 modifier = modifier.fillMaxSize()
                     .padding(innerPadding)
-                    .statusBarsPadding()
-                    .safeDrawingPadding()
             ) {
                 NavHostContainer(
                     courseViewModel,

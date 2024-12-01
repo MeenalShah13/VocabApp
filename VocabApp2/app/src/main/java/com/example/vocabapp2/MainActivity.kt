@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
-import com.example.vocabapp2.ui.theme.VocabApp2Theme
+import com.example.compose.AppTheme
 import com.example.vocabapp2.viewModel.MyWordsViewModel
 import com.google.firebase.FirebaseApp
 
@@ -26,10 +26,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         installSplashScreen()
         setContent {
-            VocabApp2Theme {
+            AppTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     LoginScreen(modifier = Modifier)
-//                    VocabApp(modifier = Modifier)
                 }
             }
         }
@@ -44,7 +43,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    VocabApp2Theme {
+    AppTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             VocabApp(modifier = Modifier)
         }

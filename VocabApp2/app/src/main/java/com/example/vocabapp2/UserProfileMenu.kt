@@ -45,7 +45,7 @@ fun UserProfileMenu(
 ) {
     // Container with background and padding for visual separation
     Surface(
-        color = Color(0xFFFFE4C4), // Background color for the profile menu
+        color = MaterialTheme.colorScheme.secondaryContainer, // Background color for the profile menu
         modifier = modifier
             .padding(16.dp)
             .fillMaxWidth(),
@@ -70,14 +70,14 @@ fun UserProfileMenu(
                     modifier = Modifier
                         .size(80.dp)
                         .clip(CircleShape)
-                        .border(2.dp, Color(0xffff6347), CircleShape) // Accent border
+                        .border(2.dp, MaterialTheme.colorScheme.onSurface, CircleShape) // Accent border
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
                 // User name
                 Text(
                     text = user.displayName.toString(),
-                    style = MaterialTheme.typography.titleMedium.copy(color = Color(0xFF333333))
+                    style = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onSurface)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -92,17 +92,17 @@ fun UserProfileMenu(
                 // Email row
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start,
+                    horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         text = "Email:",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray)
+                        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = user.email.toString(),
-                        style = MaterialTheme.typography.bodyMedium.copy(color = Color(0xFF444444))
+                        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface)
                     )
                 }
                 Spacer(modifier = Modifier.height(24.dp))
@@ -112,12 +112,12 @@ fun UserProfileMenu(
                     onClick = {
                         showAlertDialog = true
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xffff6347)),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.inversePrimary),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
                         text = "Sign Out",
-                        style = MaterialTheme.typography.bodyLarge.copy(color = Color.White)
+                        style = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onSurface)
                     )
                 }
 
@@ -144,14 +144,14 @@ fun UserProfileMenu(
                                 signOut(context)
                                 onSignOut()
                             }) {
-                                Text(text = "OK", color = Color(0xffff6347))
+                                Text(text = "OK", color = Color.Black)
                             }
                         },
                         dismissButton = {
                             TextButton(onClick = {
                                 showAlertDialog = false
                             }) {
-                                Text(text = "Cancel", color = Color.Gray)
+                                Text(text = "Cancel", color = Color.Black)
                             }
                         }
                     )

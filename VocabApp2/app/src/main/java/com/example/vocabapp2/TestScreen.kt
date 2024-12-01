@@ -17,6 +17,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -76,7 +77,7 @@ fun TestScreen(myWordsViewModel: MyWordsViewModel, modifier: Modifier = Modifier
                     modifier = modifier.padding(16.dp)
                         .height(600.dp)
                         .fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE4C4)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                     elevation = CardDefaults.cardElevation(8.dp)
                 ) {
                     Spacer(modifier.weight(1f))
@@ -128,8 +129,8 @@ fun TestScreen(myWordsViewModel: MyWordsViewModel, modifier: Modifier = Modifier
                                 },
                                 enabled = userAnswer.isNotBlank(), // Disable the button if no answer is entered
                                 colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color(0xffff6347),
-                                    contentColor = Color.White // White text
+                                    containerColor = MaterialTheme.colorScheme.inversePrimary,
+                                    contentColor = MaterialTheme.colorScheme.onSurface // White text
                                 )
                             ) {
                                 Text("Submit")
@@ -147,7 +148,7 @@ fun TestScreen(myWordsViewModel: MyWordsViewModel, modifier: Modifier = Modifier
                 ) {
                     Card(modifier = modifier.padding(16.dp)
                         .height(120.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE4C4))
+                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer)
                     )
                      {
                         Column(modifier = modifier.fillMaxSize(),
@@ -165,7 +166,7 @@ fun TestScreen(myWordsViewModel: MyWordsViewModel, modifier: Modifier = Modifier
                         Card(modifier = modifier
                             .padding(16.dp)
                             .height(150.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE4C4)),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
                             elevation = CardDefaults.cardElevation(8.dp)
                         )
                             {
@@ -191,7 +192,7 @@ fun TestScreen(myWordsViewModel: MyWordsViewModel, modifier: Modifier = Modifier
                         Card(modifier = modifier
                             .padding(16.dp)
                             .height(500.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE4C4)),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.secondaryContainer),
                             elevation = CardDefaults.cardElevation(8.dp)
                         ) {
                             IncorrectWordsCard(incorrectAnswers, modifier)
@@ -201,7 +202,7 @@ fun TestScreen(myWordsViewModel: MyWordsViewModel, modifier: Modifier = Modifier
 
                     Button(onClick = { restartTest() },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xffff6347),
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
                             contentColor = Color.White // White text
                         )) {
                         Text("Restart Test")
@@ -221,7 +222,7 @@ fun IncorrectWordsCard(incorrectWords: List<WordDetails>, modifier: Modifier = M
             "Incorrect Answers",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFFB71C1C), // Red color for emphasis
+            color = MaterialTheme.colorScheme.error, // Red color for emphasis
             modifier = Modifier.padding(bottom = 8.dp)
         )
 
@@ -232,7 +233,7 @@ fun IncorrectWordsCard(incorrectWords: List<WordDetails>, modifier: Modifier = M
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
                     elevation = CardDefaults.cardElevation(4.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFFDEDEC)) // Light red background
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer) // Light red background
                 ) {
                     Column(
                         modifier = Modifier
@@ -246,13 +247,13 @@ fun IncorrectWordsCard(incorrectWords: List<WordDetails>, modifier: Modifier = M
                                 text = "❌ Word: ",
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFFB71C1C)
+                                color = MaterialTheme.colorScheme.onError
                             )
                             Text(
                                 text = word.synonyms[0],
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFFB71C1C)
+                                color = MaterialTheme.colorScheme.onError
                             )
                         }
 

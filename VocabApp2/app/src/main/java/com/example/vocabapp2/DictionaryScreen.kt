@@ -12,6 +12,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -61,7 +62,7 @@ fun DictionaryScreen(
             dictionaryViewModel.fetchWordData(word = processedSearchText, myWordsViewModel = myWordsViewModel)
         },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFFFE4C4), // Custom background color (light peach)
+                containerColor = MaterialTheme.colorScheme.primaryContainer, // Custom background color (light peach)
                 contentColor = Color.Black // Custom text color
             )) {
             Text("Search")
@@ -78,7 +79,7 @@ fun DictionaryScreen(
                     modifier = modifier
                         .padding(16.dp)
                         .fillMaxWidth(),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE4C4)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer ),
                     elevation = CardDefaults.cardElevation(8.dp)
                 ) {
                     Column(

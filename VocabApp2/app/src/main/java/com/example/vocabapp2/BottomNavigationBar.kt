@@ -1,6 +1,7 @@
 package com.example.vocabapp2
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -52,8 +53,8 @@ fun BottomNavigationBar(navController: NavHostController) {
                     }
                 },
                 colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color(0xFFFFA726), // Highlighted color for selected page
-                    selectedTextColor = Color(0xFFFFA726),
+                    selectedIconColor = MaterialTheme.colorScheme.primary, // Highlighted color for selected page
+                    selectedTextColor = MaterialTheme.colorScheme.onSurface,
                     unselectedIconColor = Color.Gray, // Default color for unselected items
                     unselectedTextColor = Color.Gray
                 )

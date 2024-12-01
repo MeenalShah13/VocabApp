@@ -74,7 +74,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .statusBarsPadding()
             .safeDrawingPadding(),
-        color = Color(0xFFFFE4C4) // Background color
+        color = MaterialTheme.colorScheme.background // Background color
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -87,7 +87,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
             Text(
                 text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.displayMedium,
-                color = Color(0xffff6347),
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(bottom = 32.dp)
             )
 
@@ -96,7 +96,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xffff6347)),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                 elevation = CardDefaults.cardElevation(8.dp),
                 onClick = {
                     val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -134,7 +134,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-                colors = CardDefaults.cardColors(containerColor = Color(0xFFFFE4C4)),
+                colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer),
                 elevation = CardDefaults.cardElevation(8.dp),
                 onClick = {
                     showAlertDialog = true
@@ -150,14 +150,14 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                     Icon(
                         imageVector = Icons.Default.PersonOutline, // Placeholder for guest icon
                         contentDescription = null,
-                        tint = Color(0xffff6347),
+                        tint = MaterialTheme.colorScheme.surfaceTint,
                         modifier = Modifier.size(24.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = stringResource(R.string.guest_sign_in),
                         style = MaterialTheme.typography.bodyLarge,
-                        color = Color(0xffff6347)
+                        color = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
@@ -184,7 +184,7 @@ fun LoginScreen(modifier: Modifier = Modifier) {
                             continueAsGuest = true
                             showAlertDialog = false
                         }) {
-                            Text(text = "OK", color = Color(0xffff6347))
+                            Text(text = "OK", color = MaterialTheme.colorScheme.onSurface)
                         }
                     },
                     dismissButton = {

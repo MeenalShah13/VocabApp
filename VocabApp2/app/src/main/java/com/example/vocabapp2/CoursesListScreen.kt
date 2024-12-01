@@ -23,7 +23,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -88,7 +87,6 @@ fun CoursesListScreen(
                     course = course,
                     viewModel = courseViewModel,
                     navController = navController,
-                    context = context,
                     isSelected = selectedCourseId == course.courseId,
                     onCourseClick = { selectedCourseId = course.courseId }, // Update selected course
                     modifier = modifier
@@ -103,12 +101,11 @@ fun CourseCard(
     course: Course,
     viewModel: CourseViewModel,
     navController: NavController,
-    context: Context,
     isSelected: Boolean,
     onCourseClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val cardBackgroundColor = if (isSelected) Color(0xffff6347) else Color(0xFFFFE4C4)
+    val cardBackgroundColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer
     val cardElevation = if (isSelected) 16.dp else 8.dp
 
     Card(
