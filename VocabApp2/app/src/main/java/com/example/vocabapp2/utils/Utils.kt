@@ -36,7 +36,7 @@ fun getSynonyms(synonyms: List<String>): String {
     }
 
     var synonymsString = "Synonyms: "
-    for (index in intArrayOf(1,(synonyms.size - 1))) {
+    for (index in 1 until synonyms.size) {
         synonymsString += synonyms[index]
         if (index != synonyms.size - 1) {
             synonymsString += ", "
